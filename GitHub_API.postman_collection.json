@@ -1,0 +1,353 @@
+{
+	"info": {
+		"_postman_id": "435443ba-aaec-4cf4-9ca0-bccea68c7457",
+		"name": "GitHub_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25605168"
+	},
+	"item": [
+		{
+			"name": "Issues",
+			"item": [
+				{
+					"name": "POST",
+					"item": [
+						{
+							"name": "Create_Issue",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check issue number and title\", function() \r",
+											"{\r",
+											"    let body = pm.response.json();\r",
+											"    pm.expect(body.number, \"Number property\").greaterThan(0);\r",
+											"    pm.expect(body.title, \"Title property\").equal(\"forth issue\");\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "kily72",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\" : \"forth issue\"}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create_Issue_With_Labels",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "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",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "kily72",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\" : \" issue with labels\",\r\n\"labels\": [\"bug\", \"priority:critical\", \"my label\"]}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET_Single_Issue",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check status code\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"})\r",
+											"pm.test(\"Status code name has string\", function () {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"pm.test(\"Response time is less than 250ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
+											"});\r",
+											"pm.test(\"Check issue number\", function(){\r",
+											"    const body = pm.response.json();\r",
+											"    pm.expect(body.number, \"Number property\").to.be.equal(1);\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/postman/issues/1",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"postman",
+										"issues",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET_All_Issues",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Check if response is an array of issues\", function () {\r",
+											" const body = pm.response.json();\r",
+											" console.log(\"BODY \", body);\r",
+											" pm.expect(Array.isArray(body))\r",
+											"\r",
+											" for (let item of body) {\r",
+											"     pm.expect(typeof(item.title)).equals(\"string\");\r",
+											"     pm.expect(typeof(item.number)).equal(\"number\")\r",
+											"     pm.expect(item.number, \"Issue number property\").is.greaterThan(0);\r",
+											" }\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/postman/issues",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"postman",
+										"issues"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "https://restcountries.com/v3.1/lang/german",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://restcountries.com/v3.1/lang/german",
+									"protocol": "https",
+									"host": [
+										"restcountries",
+										"com"
+									],
+									"path": [
+										"v3.1",
+										"lang",
+										"german"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Repos",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET_All_Repos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/users/kily72/repos",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"users",
+										"kily72",
+										"repos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET_Single_Repo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Check repo name\", function() {\r",
+											"    const body = pm.response.json();\r",
+											"    pm.expect(body.name, \"Name property\").equals(\"Postman\");\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/postman",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"postman"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Commits",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "GET_All_Commits",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://api.github.com/repos/kily72/NUnit-Summator/commits",
+									"protocol": "https",
+									"host": [
+										"api",
+										"github",
+										"com"
+									],
+									"path": [
+										"repos",
+										"kily72",
+										"NUnit-Summator",
+										"commits"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
